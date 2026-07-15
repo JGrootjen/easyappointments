@@ -1,0 +1,151 @@
+/*
+ * jwgrootjen.com booking theme.
+ * Layered over Easy!Appointments (GPLv3) to match jwgrootjen.com:
+ * navy header band, teal accents, Inter body + mono labels.
+ * Loaded after the stock stylesheets, so these rules win.
+ */
+
+@font-face {
+    font-family: "InterJWG";
+    font-style: normal;
+    font-weight: 100 900;
+    font-display: swap;
+    src: url("../fonts/Inter-Variable.woff2") format("woff2");
+}
+
+:root {
+    --jwg-navy: #0d1b2a;
+    --jwg-navy-soft: #152838;
+    --jwg-teal: #35d0c4;
+    --jwg-teal-dark: #0f766e;
+    --jwg-teal-darker: #0b5c55;
+    --jwg-ink: #1b2733;
+    --jwg-ink-muted: #4b5a68;
+    --jwg-line: #dfe7ec;
+    --jwg-paper: #ffffff;
+    --jwg-paper-alt: #f2f6f8;
+    --jwg-on-dark: #e8eef4;
+    --jwg-on-dark-muted: #9db2c4;
+    --jwg-sans: "InterJWG", "Inter", "Segoe UI", system-ui, -apple-system, sans-serif;
+    --jwg-mono: ui-monospace, "Cascadia Code", "JetBrains Mono", Consolas, monospace;
+    --jwg-radius: 10px;
+    --jwg-shadow: 0 1px 3px rgba(13, 27, 42, 0.08);
+}
+
+body,
+#book-appointment-wizard,
+#book-appointment-wizard .form-control,
+#book-appointment-wizard .form-select {
+    font-family: var(--jwg-sans);
+    color: var(--jwg-ink);
+}
+
+body {
+    background-color: var(--jwg-paper-alt) !important;
+    background-image: none !important;
+}
+
+/* Card */
+#book-appointment-wizard {
+    border: 1px solid var(--jwg-line);
+    border-radius: var(--jwg-radius);
+    box-shadow: var(--jwg-shadow);
+}
+
+/* Header band -> navy */
+#header,
+#book-appointment-wizard #header {
+    background-color: var(--jwg-navy) !important;
+    border-color: var(--jwg-navy) !important;
+    color: var(--jwg-on-dark);
+}
+#book-appointment-wizard #header,
+#book-appointment-wizard #header a,
+#book-appointment-wizard #header strong {
+    color: var(--jwg-on-dark);
+}
+#book-appointment-wizard #company-name small,
+#book-appointment-wizard #header small {
+    color: var(--jwg-on-dark-muted) !important;
+}
+
+/* Step badges on the navy band */
+#book-appointment-wizard .book-step {
+    background: var(--jwg-navy-soft) !important;
+}
+#book-appointment-wizard .book-step.active {
+    background: #ffffff !important;
+}
+#book-appointment-wizard .book-step strong {
+    color: var(--jwg-on-dark-muted) !important;
+}
+#book-appointment-wizard .book-step.active strong {
+    color: var(--jwg-teal-dark) !important;
+}
+
+/* Frame titles */
+#book-appointment-wizard .frame-title {
+    color: var(--jwg-ink) !important;
+    font-weight: 600 !important;
+}
+
+/* Primary / next / step buttons -> teal */
+#book-appointment-wizard .btn-dark,
+#book-appointment-wizard .button-next,
+#book-appointment-wizard .btn-primary {
+    background-color: var(--jwg-teal-dark) !important;
+    border-color: var(--jwg-teal-dark) !important;
+    color: #ffffff !important;
+}
+#book-appointment-wizard .btn-dark:hover,
+#book-appointment-wizard .button-next:hover,
+#book-appointment-wizard .btn-primary:hover {
+    background-color: var(--jwg-teal-darker) !important;
+    border-color: var(--jwg-teal-darker) !important;
+}
+#book-appointment-wizard .button-back {
+    color: var(--jwg-ink-muted) !important;
+    border-color: var(--jwg-line) !important;
+    background: #fff !important;
+}
+
+/* Form controls */
+#book-appointment-wizard .form-select,
+#book-appointment-wizard .form-control {
+    border-color: var(--jwg-line);
+    border-radius: var(--jwg-radius);
+}
+#book-appointment-wizard .form-select:focus,
+#book-appointment-wizard .form-control:focus {
+    border-color: var(--jwg-teal-dark);
+    box-shadow: 0 0 0 0.2rem rgba(53, 208, 196, 0.25);
+}
+#book-appointment-wizard label strong {
+    font-weight: 600;
+}
+
+/* Selected date / available hour -> teal */
+#book-appointment-wizard #available-hours .selected-hour,
+#book-appointment-wizard .selected-hour,
+#book-appointment-wizard .flatpickr-day.selected {
+    background-color: var(--jwg-teal-dark) !important;
+    border-color: var(--jwg-teal-dark) !important;
+}
+
+/* Service description box */
+#book-appointment-wizard #service-description {
+    color: var(--jwg-ink-muted);
+}
+
+/* Footer */
+#frame-footer {
+    border-color: var(--jwg-line) !important;
+}
+#frame-footer a {
+    color: var(--jwg-teal-dark);
+}
+
+/* Single provider: hide the provider field entirely */
+#book-appointment-wizard .mb-3:has(#select-provider) {
+    display: none !important;
+}
