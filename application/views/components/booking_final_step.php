@@ -36,15 +36,15 @@
                 <div class="row frame-content m-auto" style="max-width: 630px;">
                     <div class="col">
                         <label class="captcha-title float-start my-2 mb-2 me-md-4" for="captcha-text">
-                            CAPTCHA
+                            Spam check
                             <button class="btn btn-link text-dark text-decoration-none py-0">
                                 <i class="fas fa-sync-alt"></i>
                             </button>
                         </label>
                         <img class="captcha-image float-start float-md-end mb-4 rounded" src="<?= site_url(
                             'captcha',
-                        ) ?>" alt="CAPTCHA">
-                        <input id="captcha-text" class="captcha-text form-control w-100 mb-4" type="text" value=""/>
+                        ) ?>" alt="Spam check question">
+                        <input id="captcha-text" class="captcha-text form-control w-100 mb-4" type="text" inputmode="numeric" autocomplete="off" value="" placeholder="Type the answer"/>
                         <span id="captcha-hint" class="help-block" style="opacity:0">&nbsp;</span>
                     </div>
                 </div>

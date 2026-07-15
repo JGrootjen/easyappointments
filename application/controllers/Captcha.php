@@ -37,16 +37,26 @@ class Captcha extends EA_Controller
     {
         method('get');
 
-        $captcha_builder = new CaptchaBuilder();
+        // Arithmetic spam check rendered as an image (self-hosted, no third-party
+        // service) to mirror the jwgrootjen.com contact-form captcha.
+        $a = random_int(2, 9);
+        $b = random_int(2, 9);
+        session(['captcha_phrase' => (string) ($a + $b)]);
 
-        $captcha_builder->setDistortion(true);
-        $captcha_builder->setMaxBehindLines(1);
-        $captcha_builder->setMaxFrontLines(1);
-        $captcha_builder->setBackgroundColor(255, 255, 255);
-        $captcha_builder->build();
-        session(['captcha_phrase' => $captcha_builder->getPhrase()]);
+        $width = 160;
+        $height = 50;
+        $image = imagecreatetruecolor($width, $height);
+        $bg = imagecolorallocate($image, 255, 255, 255);
+        $ink = imagecolorallocate($image, 27, 39, 51);
+        $faint = imagecolorallocate($image, 205, 214, 222);
+        imagefilledrectangle($image, 0, 0, $width, $height, $bg);
+        for ($i = 0; $i < 4; $i++) {
+            imageline($image, random_int(0, $width), random_int(0, $height), random_int(0, $width), random_int(0, $height), $faint);
+        }
+        imagestring($image, 5, 28, 16, $a . '  +  ' . $b . '  = ?', $ink);
         header('Content-type: image/jpeg');
-        $captcha_builder->output();
+        imagejpeg($image);
+        imagedestroy($image);
     }
 
     /**

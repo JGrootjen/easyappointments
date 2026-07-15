@@ -13,3 +13,4 @@ COPY assets/js/jwg-booking.min.js    /var/www/html/assets/js/jwg-booking.min.js
 COPY application/views/layouts/booking_layout.php       /var/www/html/application/views/layouts/booking_layout.php
 COPY application/views/components/booking_footer.php    /var/www/html/application/views/components/booking_footer.php
 COPY application/views/components/booking_info_step.php /var/www/html/application/views/components/booking_info_step.php
+COPY application/controllers/Captcha.php                 /var/www/html/application/controllers/Captcha.php
