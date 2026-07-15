@@ -29,6 +29,8 @@
 
     <?php component('company_color_style', ['company_color' => vars('company_color')]); ?>
 
+    <link rel="stylesheet" type="text/css" href="<?= asset_url('assets/css/jwg-booking.css') ?>">
+
     <?php slot('styles'); ?>
 </head>
 
@@ -104,6 +106,8 @@
 ]); ?>
 
 <?php slot('scripts'); ?>
+
+<script src="<?= asset_url('assets/js/jwg-booking.js') ?>"></script>
 
 </body>
 </html>

@@ -24,7 +24,7 @@
 <div id="wizard-frame-3" class="wizard-frame p-3 p-md-4" style="display:none;">
     <div class="frame-container py-3" style="min-height: 500px;">
 
-        <h2 class="frame-title fw-light text-center mb-4 text-muted"><?= lang('customer_information') ?></h2>
+        <h2 class="frame-title fw-light text-center mb-4 text-muted">Information</h2>
 
         <div class="row frame-content">
             <div class="col-12 col-lg-6 field-col mx-auto">
@@ -124,12 +124,12 @@
                 <?php if ($display_notes): ?>
                     <div class="mb-3">
                         <label for="notes" class="form-label">
-                            <?= lang('notes') ?>
+                            What would you like to discuss?
                             <?php if ($require_notes): ?>
                                 <span class="text-danger">*</span>
                             <?php endif; ?>
                         </label>
-                        <textarea id="notes" maxlength="500"
+                        <textarea id="notes" maxlength="500" placeholder="e.g. which course, thesis topic, or question, so I can prepare"
                                   class="<?= $require_notes ? 'required' : '' ?> form-control" rows="1"></textarea>
                     </div>
                 <?php endif; ?>
