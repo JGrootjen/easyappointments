@@ -14,3 +14,4 @@ COPY application/views/layouts/booking_layout.php       /var/www/html/applicatio
 COPY application/views/components/booking_footer.php    /var/www/html/application/views/components/booking_footer.php
 COPY application/views/components/booking_info_step.php /var/www/html/application/views/components/booking_info_step.php
 COPY application/controllers/Captcha.php                 /var/www/html/application/controllers/Captcha.php
+COPY application/views/components/booking_final_step.php /var/www/html/application/views/components/booking_final_step.php
