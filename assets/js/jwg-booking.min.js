@@ -42,7 +42,7 @@
         var holder = document.createElement('div');
         holder.innerHTML =
             '<div class="mb-3" id="jwg-service-field">' +
-            '  <label for="jwg-service" class="fs-5 mb-2"><strong>Service</strong></label>' +
+            '  <label for="jwg-service" class="fs-5 mb-2"><strong>Type</strong></label>' +
             '  <select id="jwg-service" class="form-select mb-4"><option value="">Please select</option></select>' +
             '</div>' +
             '<div class="mb-3" id="jwg-format-field">' +
@@ -64,6 +64,10 @@
         });
 
         wrapper.style.display = 'none'; // hide the underlying service field
+
+        // The provider dropdown is hidden, so the step heading should not mention it.
+        var title = document.querySelector('#wizard-frame-1 .frame-title');
+        if (title) { title.textContent = 'Meeting'; }
 
         function sync() {
             var name = svc.value;
