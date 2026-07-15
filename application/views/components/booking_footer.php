@@ -11,10 +11,10 @@
 <div id="frame-footer" class="p-3 text-center border-top">
     <small class="d-block d-md-flex">
         <span class="footer-powered-by small d-block w-100 w-md-50 text-center text-md-start p-1 pe-md-0">
-            Powered By
+            Running
             <a href="https://easyappointments.org" target="_blank">Easy!Appointments</a>
-            <span>&middot;</span>
-            <a href="https://github.com/JGrootjen/easyappointments" target="_blank">source on GitHub</a>
+            from
+            <a href="https://github.com/JGrootjen/easyappointments" target="_blank">GitHub</a>
 
             <?php if (!empty($legal_notice_url)): ?>
                 <span>|</span>
