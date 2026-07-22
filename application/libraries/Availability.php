@@ -26,6 +26,11 @@ class Availability
     protected EA_Controller|CI_Controller $CI;
 
     /**
+     * @var array Cache of service category names, keyed by category ID (one lookup per request).
+     */
+    protected array $service_category_names = [];
+
+    /**
      * Availability constructor.
      */
     public function __construct()
@@ -40,6 +45,7 @@ class Availability
         $this->CI->load->model('settings_model');
         $this->CI->load->model('unavailabilities_model');
         $this->CI->load->model('blocked_periods_model');
+        $this->CI->load->model('service_categories_model');
         $this->CI->load->model('working_plan_exceptions_model');
 
         $this->CI->load->library('ics_file');
@@ -63,14 +69,21 @@ class Availability
         array $provider,
         ?int $exclude_appointment_id = null,
     ): array {
-        if ($this->CI->blocked_periods_model->is_entire_date_blocked($date)) {
+        // Service-aware variant of Blocked_periods_model::is_entire_date_blocked(): "online only"
+        // blocked periods do not count against services in an online category.
+        $date_spanning_blocked_periods = $this->filter_blocked_periods_for_service(
+            $this->CI->blocked_periods_model->get_covering_date($date),
+            $service,
+        );
+
+        if (count($date_spanning_blocked_periods) > 1) {
             return [];
         }
 
         if ($service['attendants_number'] > 1) {
             $available_hours = $this->consider_multiple_attendants($date, $service, $provider, $exclude_appointment_id);
         } else {
-            $available_periods = $this->get_available_periods($date, $provider, $exclude_appointment_id);
+            $available_periods = $this->get_available_periods($date, $provider, $exclude_appointment_id, $service);
 
             $available_hours = $this->generate_available_hours($date, $service, $available_periods);
         }
@@ -131,7 +144,10 @@ class Availability
             ],
         ];
 
-        $blocked_periods = $this->CI->blocked_periods_model->get_for_period($date, $date);
+        $blocked_periods = $this->filter_blocked_periods_for_service(
+            $this->CI->blocked_periods_model->get_for_period($date, $date),
+            $service,
+        );
 
         $periods = $this->remove_breaks($date, $periods, $date_working_plan['breaks']);
         $periods = $this->remove_unavailability_events($periods, $unavailability_events);
@@ -317,6 +333,70 @@ class Availability
     }
 
     /**
+     * Tell whether a blocked period only blocks in-person bookings.
+     *
+     * Convention: a blocked period whose name contains "online only" (case-insensitive, space or
+     * hyphen) keeps services in an online category bookable and only blocks the rest. Any other
+     * blocked period blocks every service, as upstream intends.
+     *
+     * @param array $blocked_period Blocked period data.
+     *
+     * @return bool
+     */
+    protected function is_online_only_blocked_period(array $blocked_period): bool
+    {
+        return (bool) preg_match('/online[\s-]*only/i', (string) ($blocked_period['name'] ?? ''));
+    }
+
+    /**
+     * Tell whether a service belongs to an online category (category name contains "online").
+     *
+     * @param array|null $service Service data.
+     *
+     * @return bool
+     */
+    protected function is_online_service(?array $service): bool
+    {
+        $service_category_id = $service['id_service_categories'] ?? null;
+
+        if (!$service_category_id) {
+            return false;
+        }
+
+        if (!array_key_exists($service_category_id, $this->service_category_names)) {
+            $this->service_category_names[$service_category_id] = (string) $this->CI->service_categories_model->value(
+                (int) $service_category_id,
+                'name',
+            );
+        }
+
+        return (bool) preg_match('/online/i', $this->service_category_names[$service_category_id]);
+    }
+
+    /**
+     * Drop the "online only" blocked periods when checking an online service, so that online
+     * bookings stay possible while in-person ones are blocked.
+     *
+     * @param array $blocked_periods Blocked period records.
+     * @param array|null $service Service data (null leaves the records untouched).
+     *
+     * @return array
+     */
+    protected function filter_blocked_periods_for_service(array $blocked_periods, ?array $service): array
+    {
+        if (!$this->is_online_service($service)) {
+            return $blocked_periods;
+        }
+
+        return array_values(
+            array_filter(
+                $blocked_periods,
+                fn($blocked_period) => !$this->is_online_only_blocked_period($blocked_period),
+            ),
+        );
+    }
+
+    /**
      * Get an array containing the free time periods (start - end) of a selected date.
      *
      * This method is very important because there are many cases where the system needs to know when a provider is
@@ -326,13 +406,19 @@ class Availability
      * @param string $date Selected date (Y-m-d).
      * @param array $provider Provider data.
      * @param int|null $exclude_appointment_id Exclude an appointment from the availability generation.
+     * @param array|null $service Service data; when provided, "online only" blocked periods are
+     * ignored for services in an online category (they only block in-person services).
      *
      * @return array Returns an array with the available time periods of the provider.
      *
      * @throws Exception
      */
-    public function get_available_periods(string $date, array $provider, ?int $exclude_appointment_id = null): array
-    {
+    public function get_available_periods(
+        string $date,
+        array $provider,
+        ?int $exclude_appointment_id = null,
+        ?array $service = null,
+    ): array {
         // Get the service, provider's working plan and provider appointments.
         $working_plan = json_decode($provider['settings']['working_plan'], true);
 
@@ -364,7 +450,10 @@ class Availability
             array_merge(
                 $this->CI->appointments_model->get($where),
                 $this->CI->unavailabilities_model->get($where),
-                $this->CI->blocked_periods_model->get_for_period($date, $date),
+                $this->filter_blocked_periods_for_service(
+                    $this->CI->blocked_periods_model->get_for_period($date, $date),
+                    $service,
+                ),
             ),
         );
 

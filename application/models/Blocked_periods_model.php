@@ -436,10 +436,22 @@ class Blocked_periods_model extends EA_Model
      */
     public function is_entire_date_blocked(string $date): bool
     {
+        return count($this->get_covering_date($date)) > 1;
+    }
+
+    /**
+     * Get the blocked periods that span the given date from start to end.
+     *
+     * @param string $date
+     *
+     * @return array
+     */
+    public function get_covering_date(string $date): array
+    {
         return $this->query()
             ->where('DATE(start_datetime) <=', $date)
             ->where('DATE(end_datetime) >=', $date)
             ->get()
-            ->num_rows() > 1;
+            ->result_array();
     }
 }

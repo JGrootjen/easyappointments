@@ -16,3 +16,8 @@ COPY application/views/components/booking_footer.php    /var/www/html/applicatio
 COPY application/views/components/booking_info_step.php /var/www/html/application/views/components/booking_info_step.php
 COPY application/controllers/Captcha.php                 /var/www/html/application/controllers/Captcha.php
 COPY application/views/components/booking_final_step.php /var/www/html/application/views/components/booking_final_step.php
+
+# Service-aware blocked periods: a blocked period named "online only ..." blocks
+# only the in-person services; online services stay bookable during it.
+COPY application/libraries/Availability.php       /var/www/html/application/libraries/Availability.php
+COPY application/models/Blocked_periods_model.php /var/www/html/application/models/Blocked_periods_model.php
