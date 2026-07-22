@@ -9,6 +9,7 @@ COPY assets/img/jwg-favicon-32.png   /var/www/html/assets/img/jwg-favicon-32.png
 COPY assets/img/jwg-favicon-180.png  /var/www/html/assets/img/jwg-favicon-180.png
 COPY assets/img/jwg-favicon-512.png  /var/www/html/assets/img/jwg-favicon-512.png
 COPY assets/img/jwg-social-card.jpg  /var/www/html/assets/img/jwg-social-card.jpg
+COPY assets/img/jwg-booking-logo.svg /var/www/html/assets/img/jwg-booking-logo.svg
 COPY assets/css/jwg-booking.css      /var/www/html/assets/css/jwg-booking.css
 COPY assets/css/jwg-booking.min.css  /var/www/html/assets/css/jwg-booking.min.css
 COPY assets/js/jwg-booking.js        /var/www/html/assets/js/jwg-booking.js

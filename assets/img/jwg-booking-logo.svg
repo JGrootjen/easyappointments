@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+  <!-- Calendar with checkmark in the jwgrootjen.com style: teal (#35d0c4) on the navy header,
+       with the small dot accent shared with the JG site monogram. -->
+  <g fill="none" stroke="#35d0c4" stroke-width="34" stroke-linecap="round" stroke-linejoin="round">
+    <rect x="72" y="112" width="352" height="336" rx="52"/>
+    <line x1="72" y1="220" x2="424" y2="220"/>
+    <path d="M 166 322 L 232 388 L 340 268"/>
+  </g>
+  <g fill="#35d0c4">
+    <rect x="140" y="52" width="34" height="96" rx="17"/>
+    <rect x="322" y="52" width="34" height="96" rx="17"/>
+    <circle cx="464" cy="84" r="30"/>
+  </g>
+</svg>
