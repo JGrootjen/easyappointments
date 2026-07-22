@@ -8,7 +8,7 @@
 (function () {
     'use strict';
 
-    var DURATIONS = { 'Office hours': '20 min', 'Thesis supervision meeting': '30 min' };
+    var DURATIONS = { 'Office hours': '20 min', 'Meeting': '30 min' };
 
     function categoryKey(label) {
         if (/online/i.test(label)) { return 'online'; }
@@ -68,6 +68,20 @@
         // The provider dropdown is hidden, so the step heading should not mention it.
         var title = document.querySelector('#wizard-frame-1 .frame-title');
         if (title) { title.textContent = 'Meeting'; }
+
+        // The provider is always Jesse: keep only the service part of the header
+        // selection line ("<service> │ <provider>") to avoid repeating the name.
+        var selection = document.querySelector('.display-booking-selection');
+        if (selection) {
+            var trim = function () {
+                var text = selection.textContent;
+                if (text.indexOf('│') !== -1) {
+                    selection.textContent = text.split('│')[0].trim();
+                }
+            };
+            new MutationObserver(trim).observe(selection, { childList: true, characterData: true, subtree: true });
+            trim();
+        }
 
         function sync() {
             var name = svc.value;
