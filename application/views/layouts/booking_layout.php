@@ -4,21 +4,26 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
-    <meta name="theme-color" content="#35A768">
+    <meta name="theme-color" content="#0d1b2a">
     <meta name="google" content="notranslate">
 
-    <meta property="og:title" content="<?= lang('page_title') . ' ' . e(vars('company_name')) ?> | Easy!Appointments"/>
-    <meta property="og:description" content="Book Your Appointment With A Few Clicks"/>
+    <meta name="description" content="Office hours and thesis supervision meetings with Jesse Grootjen, online via Zoom or in person at TUM Garching."/>
+    <meta property="og:site_name" content="Jesse W. Grootjen">
+    <meta property="og:title" content="Book a meeting with Jesse Grootjen"/>
+    <meta property="og:description" content="Office hours and thesis supervision meetings, online via Zoom or in person at TUM Garching. Pick a slot that suits you."/>
     <meta property="og:url" content="<?= base_url() ?>">
-    <meta property="og:image" content="<?= base_url('assets/img/social-card.png') ?>"/>
+    <meta property="og:image" content="<?= base_url('assets/img/jwg-social-card.jpg') ?>"/>
     <meta property="og:type" content="website">
+    <meta property="og:locale" content="en_GB">
+    <meta name="twitter:card" content="summary">
 
     <?php slot('meta'); ?>
 
-    <title><?= lang('page_title') . ' ' . e(vars('company_name')) ?> | Easy!Appointments</title>
+    <title>Book a meeting | Jesse W. Grootjen</title>
 
-    <link rel="icon" type="image/x-icon" href="<?= asset_url('assets/img/favicon.ico') ?>">
-    <link rel="icon" sizes="192x192" href="<?= asset_url('assets/img/logo.png') ?>">
+    <link rel="icon" href="<?= asset_url('assets/img/jwg-favicon-32.png') ?>" sizes="32x32">
+    <link rel="icon" href="<?= asset_url('assets/img/jwg-favicon-512.png') ?>" sizes="512x512">
+    <link rel="apple-touch-icon" href="<?= asset_url('assets/img/jwg-favicon-180.png') ?>">
 
     <link rel="stylesheet" type="text/css" href="<?= asset_url('assets/vendor/cookieconsent/cookieconsent.min.css') ?>">
     <link rel="stylesheet" type="text/css" href="<?= asset_url('assets/vendor/flatpickr/flatpickr.min.css') ?>">

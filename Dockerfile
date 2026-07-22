@@ -5,6 +5,10 @@ FROM alextselegidis/easyappointments:1.6.0
 
 # Theme + behaviour. asset_url() resolves to the .min variants in production.
 COPY assets/fonts/inter-latin-var.woff2 /var/www/html/assets/fonts/inter-latin-var.woff2
+COPY assets/img/jwg-favicon-32.png   /var/www/html/assets/img/jwg-favicon-32.png
+COPY assets/img/jwg-favicon-180.png  /var/www/html/assets/img/jwg-favicon-180.png
+COPY assets/img/jwg-favicon-512.png  /var/www/html/assets/img/jwg-favicon-512.png
+COPY assets/img/jwg-social-card.jpg  /var/www/html/assets/img/jwg-social-card.jpg
 COPY assets/css/jwg-booking.css      /var/www/html/assets/css/jwg-booking.css
 COPY assets/css/jwg-booking.min.css  /var/www/html/assets/css/jwg-booking.min.css
 COPY assets/js/jwg-booking.js        /var/www/html/assets/js/jwg-booking.js
