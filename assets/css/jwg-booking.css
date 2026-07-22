@@ -118,6 +118,12 @@ body {
     color: var(--jwg-teal-dark) !important;
 }
 
+/* The header selection line ("Service | Provider") adds nothing here: the wizard
+   itself shows the choice, and the provider is always Jesse. */
+#header .display-booking-selection {
+    display: none !important;
+}
+
 /* Single provider: keep the provider field hidden */
 #book-appointment-wizard .mb-3:has(#select-provider) {
     display: none !important;
