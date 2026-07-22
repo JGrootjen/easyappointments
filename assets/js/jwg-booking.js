@@ -36,6 +36,12 @@
 
         var names = [];
         entries.forEach(function (e) { if (names.indexOf(e.name) === -1) { names.push(e.name); } });
+        // Present known services in DURATIONS order (Office hours first), extras after.
+        names.sort(function (a, b) {
+            var order = Object.keys(DURATIONS);
+            var ia = order.indexOf(a), ib = order.indexOf(b);
+            return (ia === -1 ? order.length : ia) - (ib === -1 ? order.length : ib);
+        });
 
         var wrapper = real.closest('.mb-3') || real.parentNode;
 
