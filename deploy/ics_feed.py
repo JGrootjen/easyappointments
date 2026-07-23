@@ -43,10 +43,13 @@ VTIMEZONE = (
 
 
 def query(sql):
-    """Run SQL against the EA database via the compose db service; returns rows of tab-split fields."""
+    """Run SQL against the EA database via the compose db service; returns rows of tab-split fields.
+
+    The explicit utf8mb4 client charset matters: without it the mysql client re-encodes output as latin1, and any umlaut (e.g. Garching b. Muenchen in the location) crashes the UTF-8 decode of the subprocess output.
+    """
     result = subprocess.run(
         ["/usr/bin/docker", "compose", "exec", "-T", "-e", f"JWG_SQL={sql}", "db", "sh", "-c",
-         'exec mysql -u"$MYSQL_USER" -p"$MYSQL_PASSWORD" "$MYSQL_DATABASE" -N -B -e "$JWG_SQL"'],
+         'exec mysql --default-character-set=utf8mb4 -u"$MYSQL_USER" -p"$MYSQL_PASSWORD" "$MYSQL_DATABASE" -N -B -e "$JWG_SQL"'],
         cwd=EA_DIR, capture_output=True, text=True, timeout=60,
     )
     if result.returncode != 0:
